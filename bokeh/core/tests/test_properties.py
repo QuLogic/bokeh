@@ -4,6 +4,7 @@ import datetime
 import unittest
 import numpy as np
 import pandas as pd
+import pytest
 from copy import copy
 
 from bokeh.core.properties import (field, value,
@@ -12,7 +13,7 @@ from bokeh.core.properties import (field, value,
     Enum, Color, DashPattern, Size, Percent, Angle, AngleSpec,
     DistanceSpec, FontSizeSpec, Override, Include, MinMaxBounds, TitleProp)
 
-from bokeh.core.has_props import HasProps
+from bokeh.core.has_props import HasProps, IPython
 
 from bokeh.models import Plot
 from bokeh.models.annotations import Title
@@ -1600,6 +1601,8 @@ def test_HasProps_clone():
     c2 = p2.properties_with_values(include_defaults=False)
     assert c1 == c2
 
+
+@pytest.mark.skipif(not IPython, reason='Test requires IPython')
 def test_HasProps_pretty():
     class Foo1(HasProps):
         a = Int(12)
